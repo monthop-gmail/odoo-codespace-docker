@@ -1,18 +1,19 @@
 version: '3.1'
 services:
   web:
-    image: odoo:16
+    image: homesumana/odoo-docker:16
     depends_on:
       - db
     ports:
       - "8069:8069"
     volumes:
       - odoo16-web-data:/var/lib/odoo
+      - ./config:/etc/odoo
       - ../odoo-addons:/mnt/extra-addons
     environment:
       - TZ=Asia/Bangkok
     restart: unless-stopped
-    container_name: odoo16-codespace-web
+    container_name: odoo16-homesumana-web
     command:
       -- --init base_setup
   db:
@@ -27,7 +28,7 @@ services:
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_DB=postgres
     restart: unless-stopped
-    container_name: odoo16-codespace-db
+    container_name: odoo16-homesumana-db
   adminer:
     image: adminer
     depends_on:
@@ -37,7 +38,20 @@ services:
     environment:
       - TZ=Asia/Bangkok
     restart: unless-stopped
-    container_name: odoo16-codespace-adminer
+    container_name: odoo16-homesumana-adminer
+  vpn:
+    image: ngrok/ngrok
+    depends_on:
+      - web
+    ports:
+      - "4040:4040"
+    environment:
+      - TZ=Asia/Bangkok
+      - NGROK_AUTHTOKEN=22JnrlocwQGRIFARXyhHR1tn5jA_bfXJZHuzSZVtdfCE3mq2
+    restart: unless-stopped
+    container_name: odoo16-homesumana-ngrok
+    command:
+      http odoo16-homesumana-web:8069
 volumes:
   odoo16-web-data:
   odoo16-db-data:
