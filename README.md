@@ -1,19 +1,20 @@
 # test in codespace
 
-## test odoo 15
-cd 15.0\
-docker compose up
-
-## test odoo 16
-cd 16.0\
-docker compose up
-
 ## test odoo 17
-cd 17.0\
+cd ce/17.0\
 docker compose up
 
-## test odoo 16, homesumana version
+## test odoo 17, homesumana version
 
-cd homesumana\
-docker build -t homesumana/odoo-docker:16 .\
+cd ce-homesumana/17.0\
+docker build -t homesumana/odoo-docker:17 .\
+docker compose up
+
+## test odoo 17 Enterprise, homesumana version
+
+cd ee-homesumana/ee-src
+tar -xvzf ../../ee/wattana_psnsoft/odoo_17.0+e.latest.tar.gz
+
+cd ee-homesumana/17.0\
+docker build -t homesumana/odoo-docker:17 .\
 docker compose up
