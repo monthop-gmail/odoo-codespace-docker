@@ -12,7 +12,7 @@ docker compose up
 
 ## test odoo 17 Enterprise, homesumana version
 
-cd ee-homesumana/ee-src
+cd ee-homesumana/ee-src\
 tar -xvzf ../../ee/wattana_psnsoft/odoo_17.0+e.latest.tar.gz
 
 cd ee-homesumana/17.0\
