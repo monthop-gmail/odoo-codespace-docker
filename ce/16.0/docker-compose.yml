@@ -39,6 +39,21 @@ services:
       - TZ=Asia/Bangkok
     restart: unless-stopped
     container_name: odoo16-codespace-adminer
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - CADDY_EMAIL=youremail@example.com
+    command: |
+      caddy reverse-proxy --from yourdomain.com --to web:8069
+    container_name: odoo16-codespace-ssl
 volumes:
+  caddy_data:
+  caddy_config:
   odoo16-web-data:
   odoo16-db-data:

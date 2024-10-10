@@ -1,19 +1,19 @@
 version: '3.1'
 services:
   web:
-    image: homesumana/odoo-docker:15
+    image: homesumana/odoo-docker:18
     depends_on:
       - db
     ports:
       - "8069:8069"
     volumes:
-      - odoo15-web-data:/var/lib/odoo
+      - odoo18-web-data:/var/lib/odoo
       - ./config:/etc/odoo
       - ../odoo-addons:/mnt/extra-addons
     environment:
       - TZ=Asia/Bangkok
     restart: unless-stopped
-    container_name: odoo15-homesumana-web
+    container_name: odoo18-homesumana-web
     command:
       -- --init base_setup
   db:
@@ -21,14 +21,14 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - odoo15-db-data:/var/lib/postgresql/data
+      - odoo18-db-data:/var/lib/postgresql/data
     environment:
       - TZ=Asia/Bangkok
       - POSTGRES_USER=odoo
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_DB=postgres
     restart: unless-stopped
-    container_name: odoo15-homesumana-db
+    container_name: odoo18-homesumana-db
   adminer:
     image: adminer
     depends_on:
@@ -38,7 +38,7 @@ services:
     environment:
       - TZ=Asia/Bangkok
     restart: unless-stopped
-    container_name: odoo15-homesumana-adminer
+    container_name: odoo18-homesumana-adminer
   vpn:
     image: ngrok/ngrok
     depends_on:
@@ -49,9 +49,9 @@ services:
       - TZ=Asia/Bangkok
       - NGROK_AUTHTOKEN=22JnrlocwQGRIFARXyhHR1tn5jA_bfXJZHuzSZVtdfCE3mq2
     restart: unless-stopped
-    container_name: odoo15-homesumana-ngrok
+    container_name: odoo18-homesumana-ngrok
     command:
-      http odoo15-homesumana-web:8069
+      http odoo18-homesumana-web:8069
   caddy:
     image: caddy:latest
     ports:
@@ -64,9 +64,9 @@ services:
       - CADDY_EMAIL=youremail@example.com
     command: |
       caddy reverse-proxy --from yourdomain.com --to web:8069
-    container_name: odoo15-homesumana-ssl
+    container_name: odoo18-homesumana-ssl
 volumes:
   caddy_data:
   caddy_config:
-  odoo15-web-data:
-  odoo15-db-data:
+  odoo18-web-data:
+  odoo18-db-data:

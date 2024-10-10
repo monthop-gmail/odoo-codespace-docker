@@ -53,6 +53,21 @@ services:
     container_name: odoo17-homesumana-ngrok
     command:
       http odoo17-homesumana-web:8069
+  caddy:
+    image: caddy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - CADDY_EMAIL=youremail@example.com
+    command: |
+      caddy reverse-proxy --from yourdomain.com --to web:8069
+    container_name: odoo17-homesumana-ssl
 volumes:
+  caddy_data:
+  caddy_config:
   odoo17-web-data:
   odoo17-db-data:
