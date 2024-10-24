@@ -5,7 +5,8 @@ USER root
 
 RUN apt-get update \
     && locale -a \
-    && apt -y install vim-tiny procps htop iputils-ping
+    && apt -y install vim-tiny procps htop iputils-ping \
+    && apt -y install net-tools wget lynx unzip rsync iw
 
 RUN apt-get update \
     && apt-get -y install git curl gcc libpython3-dev \
